@@ -1,7 +1,8 @@
-var button = document.getElementById("myButton"), 
-	output = document.getElementById("peliculla"),
-	input  = document.getElementById("text");
-
+var teamA = document.querySelector ("#count-a"),
+	countA = 0,
+	teamB = document.querySelector ("#count-b"),
+	countB = 0;
+	
 var pelis = ["<img src='img/viejo.png' alt='emojiViejo'>"
 		  + "<img src='img/house.png' alt='emojiCasa'>"
           + "<img src='img/globo.png' alt='emojiGlobo'>"
@@ -36,69 +37,151 @@ var pelis = ["<img src='img/viejo.png' alt='emojiViejo'>"
 var respuestas = ["up altas aventuras",
 				  "buscando nemo",
 				  "101 dalmatas",
-				  "Señor de los anillos",
-				  "Frozen",
-				  "Tortugas Ninjas",
+				  "señor de los anillos",
+				  "frozen",
+				  "tortugas ninjas",
 				  "deadpool"];
 
-var verif = new Array (pelis.length),
-	numero = generateNumber();
+var verif = new Array (pelis.length);
 
-// Cuando entro a la pagina imprimo la primer pelicula.
-pelicula.innerHTML = pelis [numero];
-initFlagPeliculas ();
 
-function printPelicula(){
-	console.log ("La pelicula es:" + respuestas[numero]);
+
+/*********************************************************
+					INICIO DEL PROGRAMA
+ ********************************************************/
+// Variables del DOM.
+const btnSubmit = document.querySelector ('#submit'),
+	  input  = document.querySelector ("#text"),
+	  form = document.querySelector ('form');
+
+// Variables flag.
+var firstClick = true, noTime = false; 
+
+// Otras Variables.
+var number, timer;
+
+initFilmsFlag ();
+
+// Acciones luego del click.
+form.addEventListener ("submit", function (e){
+	e.preventDefault ();
+
+	if (!noMoreElements()){
+		// Empezamos el juego.
+		if (firstClick === true){
+			newFilm(); 
+			countDown (120);
+			btnSubmit.value = 'Continuar';
+			firstClick = false;
+		}
+		else if (checkResult ()){
+			// Respuesta correcta
+			verif [number] = true;						// flag para no repetir pelicula.
+			addPoints ();
+			newFilm();
+			input.value = '';
+
+			if (!noMoreElements())
+				reloadTimer ();
+		}
+		else{
+			// Respuesta incorrecta
+			console.log ("respuesta incorrecta.");
+		}
+	}
+});
+
+/*********************************************************
+					FUNCIONES DE LÓGICA
+ ********************************************************/
+function newFilm(){
+	if (noMoreElements()){
+		console.log ("No hay más peliculas en la base de datos.");
+		clearInterval (timer);
+		return false;
+	}
+	
+	number = generateNumber (0, pelis.length);	// nueva pelicula random.	
+	pelicula.innerHTML = pelis [number];		// mostramos nueva pelicula en pantalla.
+		
+	return true;
 }
 
-function initFlagPeliculas ()
-{
+function checkResult (){
+	if (input.value.toLowerCase() === respuestas[number])
+		return true;
+	else
+		return false;
+}
+
+function addPoints (){
+	countA++;
+	teamA.innerHTML = countA;
+}
+
+function generateNumber (min, max){
+	let random;
+	
+	do {
+		random = Math.floor(Math.random() * (max-min) + min);
+	} while (verif[random]);
+
+	console.log ("El numero generado es: ", random);
+	return random;
+}
+
+
+/*********************************************************
+					FUNCIONES DE TIEMPO
+ ********************************************************/
+// Sin tiempo.
+function noMoreTime () {
+	document.getElementById("time").innerHTML = 'NO MORE TIME';
+	console.log ('Te has quedado sin tiempo.');
+	verif [number] = true; 						// flag para no repetir pelicula.
+
+	if (newFilm ())
+		countDown (120);
+}
+
+// Lógica de reinicio del timer.
+function reloadTimer (){
+	clearInterval(timer);
+	countDown (120);
+}
+
+// Lógica del contador descendiente.
+function countDown (seconds){
+	timer = setInterval (()=>{
+		let remainSeconds = ('0' + (seconds % 60)).slice(-2),
+		    remainMinutes = Math.floor (seconds /60) % 60;
+
+		document.getElementById("time").innerHTML = `${remainMinutes}:${remainSeconds}`;
+		seconds--;
+
+		if (seconds < 0){	
+			clearInterval(timer);
+			noMoreTime ();
+		}
+	}, 1000);
+}
+
+
+/*********************************************************
+				FUNCIONES PARA LA BASE DE DATOS
+ ********************************************************/
+// Aca voy a poner todas las funciones que manejan la logica con mi "base de datos". 
+// Dps que aplique una base de datos real lo tengo que modificar.
+function initFilmsFlag (){
 	for (let i = 0; i < pelis.length; i++) {
 		verif[i] = false;
 	}
 }
 
-function finListaPeliculas ()
-{
+function noMoreElements (){
 	for (let i = 0; i < pelis.length; i++) {
 		if (verif[i] == false) return false; 
 	}
 
 	return true;
 }
-
-function generateNumber (){
-	let min = 0, max = pelis.length;
-	let random = Math.floor(Math.random() * (max-min) + min);
-	console.log ("El numero generado es: ", random);
-	return random;
-}
-
-button.addEventListener ("click", function(){
-	
-	if (input.value.toUpperCase() === respuestas[numero].toUpperCase()){
-		console.log ("Respuesta Correcta!");
-		input.classList.remove ("error");
-		verif [numero] = true;
-		input.value = '';
-
-		if (finListaPeliculas() === true){
-			console.log ("No hay más peliculas en la base de datos.");
-			return;
-		}
-		
-		do{
-			numero = generateNumber();
-		} while (verif[numero] == true);
-
-		pelicula.innerHTML = pelis [numero];
-		
-	}
-	else{
-		input.classList.add ("error");
-	}
-})
-
-
-

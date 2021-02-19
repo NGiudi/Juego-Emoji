@@ -9,24 +9,35 @@
 </head>
 
 <body>
-	
-	<div class="main">
-		<h2>Juego del Emoji con HTML - CSS - Javascript</h2>
+	<div id="arena-game">
+		<div id="status-bar">
+			<div class="score">
+				<div class="color-team red"></div>
+				<p id="count-a">0</p>
+			</div>
 
-		<div id="pelicula" class="peli">
-			<img src="img/fantasma.png" alt="emojiFantasma">
-		</div>
-		
-		<div>
-			<input type="text" id="text" class="text" 
-				   placeholder="Ingrese el nombre de la pelicula...">
-				   
-			<button type="input" id="myButton">CONTINUAR</button>
-		</div>
-		
+			<div id="time">2:00</div>
 
+			<div class="score">
+				<p id="count-b">0</p>
+				<div class="color-team blue"></div>
+			</div>
+		</div>
+
+		<div id="pelicula" class="box-film">
+			<p>El juego consiste en adivinar la pelicula que está descrita por una serie de emojis, antes de que termine el tiempo.</p>
+			<p>Una vez descubierta la pelicula, debes ingresar el nombre de la película en la parte inferior y apretar el boton de continuar, si es correcta se pasa a la siguiente pelicula.</p>
+			<p>Si el tiempo termina antes de adivinar, automaticamente se pasa a la próxima pelicula</p>
+		</div>
+
+		<div id="box-controls">
+			<form action="">
+				<input type="text" id="text" placeholder="Ingrese el nombre de la pelicula...">
+				<input type="submit" id="submit" value="Empezar">
+			</form>
+		</div>
 	</div>
-	
+
 	<script src="emoji.js"></script>
 </body>
 

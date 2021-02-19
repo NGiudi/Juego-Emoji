@@ -8,55 +8,82 @@
 
 body {background-color: #EEEEEE;}
 
-h2 {
-  font-size: 35px;
-  margin: 40px auto;
-  text-align: center;
-  width: 100%;
-}
+.blue {background-color: blue;}
+.red  {background-color: red;}
+.error {border: 2px solid red;}
 
-.main {
-  margin-top: 50px;
-  display: block;
-  text-align: center;
+#arena-game{
+  margin: 30px auto;
+  width: 50%;
 }
-
-.peli {
-  padding: 20px;
-  height: 100px;
-}
-  .peli img{
-    padding: 10px;
-    height: 80px;
-    width: 80px;
+  #arena-game #status-bar{
+    background-color: #5DA5A2;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
   }
+    #arena-game #status-bar .score{
+      align-items: center;
+      display: flex;
+    }
+      #arena-game #status-bar .color-team{
+        border-radius: 4px;
+        height: 30px;
+        width: 30px;
+      }
+      #arena-game #status-bar p{
+        font-size: 18px;
+        padding: 0px 15px;
+      }
 
-.text{
-  background-color: #e0e0e0;
-  border: none;
-  border-bottom: 2px solid #5DA5A2;
-  font-size: 24px;
-  padding: 20px;
-  margin-right: 50px;
-  width: 400px;
-}
-.text:hover{
-  background-color: #d0d0d0;
+  #arena-game .box-film{
+    padding: 70px 0px;
+    text-align: center;
+  }
+    #arena-game .box-film img{
+      margin: 0px 15px;
+      width: 60px;
+    } 
+  #arena-game #box-controls{
+    display: flex;
+    justify-content: space-around;
+    padding: 0px 50px;
+  }
+    #arena-game #box-controls #text{
+      background-color: #e0e0e0;
+      border: none;
+      border-bottom: 2px solid #5DA5A2;
+      font-size: 18px;
+      padding: 15px;
+      width: 250px;
+    }
+      #arena-game #box-controls #text:hover{
+        background-color: #d0d0d0;
+      }
+    #arena-game #box-controls #submit{
+      background-color: #5DA5A2;
+      border:none;
+      border-radius: 7px;
+      box-shadow: 2px 2px 10px 0px black;
+      color: white;
+      font-weight: 900;
+      font-size: 18px;
+      padding: 12px;
+    }
+      #arena-game #box-controls #submit:active{
+        transform: scale(0.95);
+      }
+
+
+@media (max-width: 1200px) {
+  #arena-game{
+    width: 70%;
+  }
 }
 
-.error{
-  border: 2px solid red;
+@media (max-width: 900px) {
+  #arena-game{
+    width: 97%;
+  }
 }
 
-#myButton {
-  border:none;
-  border-radius: 5px;
-  background-color: #5DA5A2;
-  color: white;
-  padding: 20px;
-  font-weight: 900;
-  font-size: 1.5rem;
-  margin-top: 40px;
-  box-shadow: 2px 2px 10px 0px black;
-}
-  #myButton:active {transform: scale(0.95);}
