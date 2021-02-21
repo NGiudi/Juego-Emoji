@@ -36,11 +36,11 @@ body {background-color: #EEEEEE;}
         padding: 0px 15px;
       }
 
-  #arena-game .box-film{
+  #arena-game #box-film{
     padding: 70px 0px;
     text-align: center;
   }
-    #arena-game .box-film img{
+    #arena-game #box-film img{
       margin: 0px 15px;
       width: 60px;
     } 

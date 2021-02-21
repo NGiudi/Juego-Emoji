@@ -1,64 +1,22 @@
-var teamA = document.querySelector ("#count-a"),
-	countA = 0,
-	teamB = document.querySelector ("#count-b"),
-	countB = 0;
-	
-var pelis = ["<img src='img/viejo.png' alt='emojiViejo'>"
-		  + "<img src='img/house.png' alt='emojiCasa'>"
-          + "<img src='img/globo.png' alt='emojiGlobo'>"
-		  + "<img src='img/globo.png' alt='emojiGlobo'>",
-		  
-		  "<img src='img/lupa.png' alt='emojiLupa'>"
-		  + "<img src='img/pescado.png' alt='emojiPescado'>",
-		
-		  "<img src='img/uno.png' alt='emojiUno'>"
-		  + "<img src='img/cero.png' alt='emojiCero'>"
-		  + "<img src='img/uno.png' alt='emojiUno'>"
-		  + "<img src='img/perro.png' alt='emojiPerro'>",
-
-		  "<img src='img/hombre.png' alt='emojiHombre'>"
-		  + "<img src='img/anillo.png' alt='emojiAnillo'>"
-		  + "<img src='img/anillo.png' alt='emojiAnillo'>"
-		  + "<img src='img/anillo.png' alt='emojiAnillo'>",
-
-		  "<img src='img/chica2.png' alt='emojiChica2'>"
-		  + "<img src='img/chica1.png' alt='emojiChica1'>"
-		  + "<img src='img/munecoNieve.png' alt='emojiMuñecoNieve'>"
-		  + "<img src='img/copoNieve.png' alt='emojiCopoNieve'>",
-
-		  "<img src='img/tortuga.png' alt='tortuga'>"
-		  + "<img src='img/espada.png' alt='espada'>",
-
-		  "<img src='img/muerte.png' alt='muete'>"
-		  + "<img src='img/pool.png' alt='pool'>"
-
-		];
-
-var respuestas = ["up altas aventuras",
-				  "buscando nemo",
-				  "101 dalmatas",
-				  "señor de los anillos",
-				  "frozen",
-				  "tortugas ninjas",
-				  "deadpool"];
-
-var verif = new Array (pelis.length);
-
-
+const CANT_FILMS = 7;
 
 /*********************************************************
 					INICIO DEL PROGRAMA
  ********************************************************/
-// Variables del DOM.
-const btnSubmit = document.querySelector ('#submit'),
+const teamA = document.querySelector ("#count-a"),
+	  teamB = document.querySelector ("#count-b"),
+	  boxFilm = document.querySelector ("#box-film"),
+	  btnSubmit = document.querySelector ('#submit'),
 	  input  = document.querySelector ("#text"),
 	  form = document.querySelector ('form');
 
-// Variables flag.
-var firstClick = true, noTime = false; 
-
-// Otras Variables.
-var number, timer;
+var firstClick = true, noTime = false, verif = new Array (CANT_FILMS);	// Variables flag.
+var timer, countA = 0, countB = 0;											// Otras Variables.
+var ObjFilm = {																// Objeto con la información de la película. 
+	id: undefined,
+	film: undefined,
+	images: undefined
+};
 
 initFilmsFlag ();
 
@@ -76,18 +34,15 @@ form.addEventListener ("submit", function (e){
 		}
 		else if (checkResult ()){
 			// Respuesta correcta
-			verif [number] = true;						// flag para no repetir pelicula.
+			input.value = '';
+			verif [ObjFilm.id - 1] = true;						// flag para no repetir pelicula.
 			addPoints ();
 			newFilm();
-			input.value = '';
 
 			if (!noMoreElements())
 				reloadTimer ();
 		}
-		else{
-			// Respuesta incorrecta
-			console.log ("respuesta incorrecta.");
-		}
+		// Respuesta incorrecta
 	}
 });
 
@@ -101,14 +56,14 @@ function newFilm(){
 		return false;
 	}
 	
-	number = generateNumber (0, pelis.length);	// nueva pelicula random.	
-	pelicula.innerHTML = pelis [number];		// mostramos nueva pelicula en pantalla.
-		
+	ObjFilm.id = generateNumber (0, CANT_FILMS) + 1;			// Generamos un id de peícula random.
+	getFilmFromDB (ObjFilm.id);									// Buscamos la película en la base de datos.
+
 	return true;
 }
 
 function checkResult (){
-	if (input.value.toLowerCase() === respuestas[number])
+	if (input.value.toLowerCase() === ObjFilm.film)
 		return true;
 	else
 		return false;
@@ -126,7 +81,7 @@ function generateNumber (min, max){
 		random = Math.floor(Math.random() * (max-min) + min);
 	} while (verif[random]);
 
-	console.log ("El numero generado es: ", random);
+	console.log (`numero generado: ${random}`);
 	return random;
 }
 
@@ -138,7 +93,7 @@ function generateNumber (min, max){
 function noMoreTime () {
 	document.getElementById("time").innerHTML = 'NO MORE TIME';
 	console.log ('Te has quedado sin tiempo.');
-	verif [number] = true; 						// flag para no repetir pelicula.
+	verif [ObjFilm.id - 1] = true; 									// flag para no repetir pelicula.
 
 	if (newFilm ())
 		countDown (120);
@@ -170,16 +125,29 @@ function countDown (seconds){
 /*********************************************************
 				FUNCIONES PARA LA BASE DE DATOS
  ********************************************************/
-// Aca voy a poner todas las funciones que manejan la logica con mi "base de datos". 
-// Dps que aplique una base de datos real lo tengo que modificar.
+function getFilmFromDB(id) {
+	let xhttp = new XMLHttpRequest();
+	
+	xhttp.onreadystatechange = function() {										// AJAX.
+		if (this.readyState == 4 && this.status == 200){
+			const posDivision = this.responseText.indexOf(";", 0);
+			ObjFilm.film = this.responseText.substr(0, posDivision);	
+			boxFilm.innerHTML = this.responseText.substr(posDivision + 1); 
+		}
+	};
+
+	xhttp.open("GET", "requestDB.php?id=" + id, true);
+	xhttp.send();
+}
+
 function initFilmsFlag (){
-	for (let i = 0; i < pelis.length; i++) {
+	for (let i = 0; i < CANT_FILMS; i++) {
 		verif[i] = false;
 	}
 }
 
 function noMoreElements (){
-	for (let i = 0; i < pelis.length; i++) {
+	for (let i = 0; i < CANT_FILMS; i++) {
 		if (verif[i] == false) return false; 
 	}
 
