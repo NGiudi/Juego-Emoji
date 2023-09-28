@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* common */
+.bg-red {
+  background-color: red;
+}
+
+/* layout styles */
+#root {
+  background-color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+#top-bar {
+  background-color: #262626;
+  box-sizing: border-box;
+  color: #F0F0F0;
+  flex-shrink: 1;
+  height: 64px;
+  padding: 12px;
+}
+
+#content-box {
+  flex-grow: 1;
+}
+
+#bottom-bar {
+  background-color: #262626;
+  box-sizing: border-box;
+  color: #F0F0F0;
+  flex-shrink: 1;
+  height: 64px;
+  padding: 12px;
+}
+
+/* card points */
+.card-team {
+  align-items: center;
+  display: flex;
+}
+
+.card-team-avatar {
+  background-color: yellow;
+  border-radius: 4px;
+  height: 40px;
+  width: 40px;
+}
+
+.card-team-points {
+  font-size: 24px;
+  margin-left: 12px;
+}
+
+/* input styles */
+.input-container {
+  height: 40px;
+  background-color: #151515;
+  border-color: #686868;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+  padding: 12px;
+  width: 100%;
+}
+
+.input-container input {
+  background-color: transparent;
+  border: none;
+  color: #F0F0F0;
+  font-size: 16px;
+  line-height: 20px;
+  width: 100%;
+}
+
+.input-container input:focus {
+  outline: none;
+}
