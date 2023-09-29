@@ -10,6 +10,7 @@ export const AppContextProvider = (props) => {
   const films = React.useRef(FILMS);
 
   const [isEmptyFilms, setIsEmptyFilms] = React.useState(false);
+  const [points, setPoints] = React.useState(0);
   const [selectedFilm, setSelectedFilm]  = React.useState(null);
 
   function isCorrectFilm(value) {
@@ -42,9 +43,12 @@ export const AppContextProvider = (props) => {
 
   function handleCorrectFilm() {
     setFilmDisplayed();
-
+    setPoints((prevPoints) => prevPoints + 1);
+    
     if (setMoviesToShow()) {
       handleShowFilm();
+    } else {
+      setSelectedFilm(null);
     }
   }
 
@@ -52,7 +56,7 @@ export const AppContextProvider = (props) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (isCorrectFilm(e.target[0].value)) {
+    if (selectedFilm && isCorrectFilm(e.target[0].value)) {
       handleCorrectFilm();
     }
 
@@ -72,6 +76,7 @@ export const AppContextProvider = (props) => {
     films: films.current,
     handleSubmit,
     isEmptyFilms,
+    points,
     selectedFilm,
   };
 
