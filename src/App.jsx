@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { AppContext } from "./AppContext";
 
-import { Input, TeamCard } from "./components";
+import { TeamCard } from "./components";
 
 import "./styles/index.css";
 
@@ -16,7 +16,9 @@ export const App = () => {
       </div>
       
       <div id="content-box">
-        {ctx.selectedFilm && ctx.selectedFilm.emojis.map((emoji, idx) => {
+        {ctx.isEmptyFilms ? (
+          <p>No hay más películas</p>
+        ) : ctx.selectedFilm && ctx.selectedFilm.emojis.map((emoji, idx) => {
           return (
             <div className="box-emoji" key={`${ctx.selectedFilm.name}-emoji-${idx}`}>
               <img src={emoji} />
@@ -25,9 +27,11 @@ export const App = () => {
         })}
       </div>
 
-      <div id="bottom-bar">
-        <Input />
-      </div>
+      <form id="bottom-bar" onSubmit={ctx.handleSubmit}>
+        <input autoFocus placeholder="Ingrese en nombre de la película..." />
+
+        <button type="submit">Enviar</button>
+      </form>
     </>
   );
 };

@@ -9,15 +9,54 @@ export const AppContext = createContext(null);
 export const AppContextProvider = (props) => {  
   const films = React.useRef(FILMS);
 
+  const [isEmptyFilms, setIsEmptyFilms] = React.useState(false);
   const [selectedFilm, setSelectedFilm]  = React.useState(null);
 
-  function noMoreFilms() {  
-    return !films.current.some((f) => !f.displayed);
+  function isCorrectFilm(value) {
+    const filmName = selectedFilm.name.toLowerCase(); 
+    const inputName = value.trim().toLowerCase();
+    return filmName === inputName;
+  }
+
+  function setMoviesToShow() {
+    const isMoviesToShow = films.current.some((f) => !f.displayed);
+    setIsEmptyFilms(!isMoviesToShow);
+    return isMoviesToShow;
+  }
+
+  function setFilmDisplayed() {
+    const film = films.current.find((f) => selectedFilm.name === f.name);
+    film.displayed = true;
   }
 
   function handleShowFilm() {
     const filmIdx = generateNumber(0, films.current.length);
-    setSelectedFilm(films.current[filmIdx]);
+    const film = films.current[filmIdx];
+    
+    if (film.displayed) {
+      handleShowFilm();
+    } else {
+      setSelectedFilm(film);
+    }
+  }
+
+  function handleCorrectFilm() {
+    setFilmDisplayed();
+
+    if (setMoviesToShow()) {
+      handleShowFilm();
+    }
+  }
+
+  /* functionalities */
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (isCorrectFilm(e.target[0].value)) {
+      handleCorrectFilm();
+    }
+
+    e.target[0].value = "";
   }
 
   //? add displayed movie flag.
@@ -31,6 +70,8 @@ export const AppContextProvider = (props) => {
 
   const valueObj = {
     films: films.current,
+    handleSubmit,
+    isEmptyFilms,
     selectedFilm,
   };
 

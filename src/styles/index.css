@@ -37,8 +37,43 @@
   background-color: #262626;
   box-sizing: border-box;
   color: #F0F0F0;
+  display: flex;
   flex-shrink: 1;
   height: 64px;
+  padding: 12px;
+}
+
+/* input styles */
+#bottom-bar input {
+  height: 40px;
+  background-color: #151515;
+  border-color: #686868;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+  color: #FAFAFA;
+  flex-grow: 1;
+  font-size: 16px;
+  line-height: 20px;
+  margin-right: 16px; 
+  padding: 12px;
+  width: 100%;
+}
+
+#bottom-bar input:focus {
+  border-color: #FAFAFA;
+  outline: none;
+}
+
+#bottom-bar button {
+  background-color: #B1925A;
+  border: none; 
+  border-radius: 4px;
+  color: #FAFAFA;
+  flex-shrink: 1;
+  font-size: 14px;
+  font-weight: bold;
   padding: 12px;
 }
 
@@ -76,30 +111,4 @@
 .box-emoji img {
   object-fit: cover;
   width: 100%;
-}
-
-/* input styles */
-.input-container {
-  height: 40px;
-  background-color: #151515;
-  border-color: #686868;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-sizing: border-box;
-  padding: 12px;
-  width: 100%;
-}
-
-.input-container input {
-  background-color: transparent;
-  border: none;
-  color: #F0F0F0;
-  font-size: 16px;
-  line-height: 20px;
-  width: 100%;
-}
-
-.input-container input:focus {
-  outline: none;
 }
