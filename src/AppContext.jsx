@@ -25,8 +25,6 @@ export const AppContextProvider = (props) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(isMovieNameCorrect(e.target[0].value));
-
     if (displayedMovie && isMovieNameCorrect(e.target[0].value)) {
       handleCorrectMovie();
     }
