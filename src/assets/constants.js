@@ -4,7 +4,7 @@ import houseImg from "./images/house.png";
 import tortugaImg from "./images/tortuga.png";
 import viejoImg from "./images/viejo.png";
 
-export const FILMS = [
+export const MOVIES = [
   {
     name: "Up altas aventuras",
     emojis: [

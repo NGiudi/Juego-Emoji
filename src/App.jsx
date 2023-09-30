@@ -16,11 +16,11 @@ export const App = () => {
       </div>
       
       <div id="content-box">
-        {ctx.isEmptyFilms ? (
+        {!ctx.displayedMovie ? (
           <p>No hay más películas</p>
-        ) : ctx.selectedFilm && ctx.selectedFilm.emojis.map((emoji, idx) => {
+        ) : ctx.displayedMovie.emojis.map((emoji, idx) => {
           return (
-            <div className="box-emoji" key={`${ctx.selectedFilm.name}-emoji-${idx}`}>
+            <div className="box-emoji" key={`${ctx.displayedMovie.name}-emoji-${idx}`}>
               <img src={emoji} />
             </div>
           );
