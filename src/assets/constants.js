@@ -4,6 +4,8 @@ import houseImg from "./images/house.png";
 import tortugaImg from "./images/tortuga.png";
 import viejoImg from "./images/viejo.png";
 
+export const OPTION_INTERVAL = 2  * 60 * 1000; //? 2 minutes.
+
 export const MOVIES = [
   {
     name: "Up altas aventuras",

@@ -1,37 +1,19 @@
-import { useContext } from "react";
+import React from "react";
 
 import { AppContext } from "./AppContext";
 
-import { TeamCard } from "./components";
+import { GamePage } from "./pages/GamePage";
+import { RulesPage } from "./pages/RulesPage";
 
 import "./styles/index.css";
 
 export const App = () => {
-  const ctx = useContext (AppContext);
+  const ctx = React.useContext(AppContext);
 
-  return (
-    <>
-      <div id="top-bar">
-        <TeamCard />
-      </div>
-      
-      <div id="content-box">
-        {!ctx.displayedMovie ? (
-          <p>No hay más películas</p>
-        ) : ctx.displayedMovie.emojis.map((emoji, idx) => {
-          return (
-            <div className="box-emoji" key={`${ctx.displayedMovie.name}-emoji-${idx}`}>
-              <img src={emoji} />
-            </div>
-          );
-        })}
-      </div>
+  const pages = {
+    game: <GamePage />,
+    rules: <RulesPage />,
+  }
 
-      <form id="bottom-bar" onSubmit={ctx.handleSubmit}>
-        <input autoFocus placeholder="Ingrese en nombre de la película..." />
-
-        <button type="submit">Enviar</button>
-      </form>
-    </>
-  );
+  return pages[ctx.page];
 };

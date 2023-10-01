@@ -1,46 +1,83 @@
 import React from "react";
 
 import { useMovies } from "./hooks/useMovies";
+import { useTimer } from "./hooks/useTimer";
+
+import { OPTION_INTERVAL } from "./assets/constants";
 
 export const AppContext = React.createContext(null);
 
 export const AppContextProvider = (props) => {  
   const [displayedMovie, setDisplayedMovie] = React.useState(null);
+  const [isGameOver, setIsGameOver] = React.useState(false);
+  const [page, setPage] = React.useState("rules");
   const [points, setPoints] = React.useState(0);
+  const [input, setInput] = React.useState("");
 
+  const timer = useTimer(OPTION_INTERVAL);
   const movies = useMovies();
 
-  function isMovieNameCorrect(movieName) {
+  const getMovie = () => {
+    const movie = movies.getMovie();
+
+    if (movie) {
+      
+      movies.deleteMovie(movie.name); //? delete current movie of the list.
+      setDisplayedMovie(movie);       //? show new movie. 
+      timer.start();                  //? start timer.
+    } else {
+      setDisplayedMovie(null);
+      setIsGameOver(true);        //? game over flag.
+      timer.stop();
+    }
+  }
+
+  const isMovieNameCorrect = (movieName) => {
     const inputName = movieName.trim().toLowerCase();
     movieName = displayedMovie.name.toLowerCase(); 
     return movieName === inputName;
   }
 
-  function handleCorrectMovie() {
-    setPoints((prevPoints) => prevPoints + 1);
-    movies.deleteMovie(displayedMovie.name);
-    setDisplayedMovie(movies.getMovie());
+  const handleCorrectMovie = () => {
+    setPoints((prevPoints) => prevPoints + 1);  //? add point.
+    getMovie();                                 //? get new movie.
   }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (displayedMovie && isMovieNameCorrect(e.target[0].value)) {
-      handleCorrectMovie();
-    }
-
-    e.target[0].value = "";
-  }
-
-  //? add displayed movie flag.
-  React.useEffect(() => {
-    setDisplayedMovie(movies.getMovie());
-  }, []);
 
   const valueObj = {
     displayedMovie,
-    handleSubmit,
+    isGameOver,
+    input,
+    isTimeFinished: timer.isFinished,
+    page,
     points,
+    time: timer.time,
+    handleInputChange: (e) => {
+      setInput(e.target.value);
+    },
+    handleNextMovie: () => {
+      setInput(""); //? clear input content.
+      getMovie();   //? get new movie.
+    },
+    restartGame: () => {
+      //? clear values.
+      movies.restartMovies();
+      setIsGameOver(false);
+      setPoints(0);
+
+      //? init game.
+      getMovie();
+    },
+    startGame: () => {
+      getMovie();       //? init game.
+      setPage("game");  //? change content.
+    },
+    validateInputMovie: () => {
+      if (!timer.isFinished && isMovieNameCorrect(input)) {
+        handleCorrectMovie();
+      }
+      
+      setInput(""); //? clear input content.
+    },
   };
 
   return (

@@ -24,6 +24,7 @@
   flex-shrink: 1;
   height: 64px;
   padding: 12px;
+  position: relative;
 }
 
 #content-box {
@@ -92,6 +93,15 @@
 .card-team-points {
   font-size: 24px;
   margin-left: 12px;
+}
+
+/* timer contaienr */
+#timer-box {
+  font-size: 18px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* content styles */
