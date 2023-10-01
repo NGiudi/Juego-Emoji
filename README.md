@@ -1,27 +1,27 @@
-# React + TypeScript + Vite
+# Emoji game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Objetivo del juego
 
-Currently, two official plugins are available:
+Adivinar la película representada por una serie de emojis en un período de tiempo limitado (2 minutos).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Instrucciones
 
-## Expanding the ESLint configuration
+1. El juego consiste en una serie de rondas en las que se mostrará un conjunto de emojis que representan una película específica.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. Se selecciona, al azar, una película de una lista predefinida.
 
-- Configure the top-level `parserOptions` property like this:
+3. Se muestra en pantalla los emojis y los  jugadores tienen 2 minutos para adivinar de qué película se trata.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+4. Escribir sus respuestas en el input de la barra inferior y apretar en el botón "Enviar".
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+5. Los jugadores pueden hacer la cantidad de intentos que deseen dentro del tiempo dado.
+
+6. Caso el usuario no adivine la película y finalice los 2 minutos, se reemplaza el botón de enviar por el botón de "Siguiente" para seguir jugando.
+
+7. Al adivinar correctamente la película, el usuario recibirá un punto. El usuario debe apretar en el botón "Siguiente" para ver la siguiente película.
+
+## TODO
+
+- [] add disabled styles in button and input.
+- [] add error styles.
+- [] use typescript.

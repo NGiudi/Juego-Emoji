@@ -30,7 +30,13 @@ export const GamePage = () => {
       </div>
 
       <div id="bottom-bar">
-        <input autoFocus placeholder="Ingrese en nombre de la película..." onChange={ctx.handleInputChange} value={ctx.input} />
+        <input 
+          autoFocus
+          disabled={ctx.isTimeFinished}
+          placeholder="Ingrese en nombre de la película..."
+          onChange={ctx.handleInputChange}
+          value={ctx.input}
+        />
 
         {ctx.isGameOver ? (
           <button onClick={ctx.restartGame}>
