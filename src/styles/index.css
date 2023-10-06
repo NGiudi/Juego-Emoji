@@ -11,41 +11,55 @@
 /* layout styles */
 #root {
   background-color: #FAFAFA;
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   width: 100vw;
 }
 
-#top-bar {
+.layout--top-bar {
   background-color: #262626;
   box-sizing: border-box;
   color: #F0F0F0;
-  flex-shrink: 1;
   height: 64px;
   padding: 12px;
   position: relative;
 }
 
-#content-box {
+.layout--content-box {
   align-items: center;
   display: flex;
-  flex-grow: 1;
+  height: calc(100vh - 64px - 64px); /* screen_height - top_bar - bottom_bar */
   justify-content: center;
+  overflow: auto;
 }
 
-#bottom-bar {
+.layout--bottom-bar {
   background-color: #262626;
   box-sizing: border-box;
   color: #F0F0F0;
   display: flex;
-  flex-shrink: 1;
   height: 64px;
   padding: 12px;
 }
 
-/* input styles */
-#bottom-bar input {
+/* rules styles */
+.rules-box {
+  height: 100%;
+}
+
+.rules-box li {
+  padding-bottom: 12px;
+}
+
+.rules-box li:first-child {
+  padding-top: 50px;
+}
+
+.rules-box li:last-child{
+  padding-bottom: 50px;
+}
+
+/* game styles */
+.layout--bottom-bar input {
   height: 40px;
   background-color: #151515;
   border-color: #686868;
@@ -62,12 +76,12 @@
   width: 100%;
 }
 
-#bottom-bar input:focus {
+.layout--bottom-bar input:focus {
   border-color: #FAFAFA;
   outline: none;
 }
 
-#bottom-bar button {
+.layout--bottom-bar button {
   background-color: #B1925A;
   border: none; 
   border-radius: 4px;

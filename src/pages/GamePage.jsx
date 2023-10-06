@@ -9,7 +9,7 @@ export const GamePage = () => {
 
   return (
     <>
-      <div id="top-bar">
+      <div className="layout--top-bar">
         <TeamCard />
 
         <div id="timer-box">
@@ -17,7 +17,7 @@ export const GamePage = () => {
         </div>
       </div>
       
-      <div id="content-box">
+      <div className="layout--content-box">
         {ctx.isGameOver ? (
           <p>No hay más películas</p>
         ) : ctx.displayedMovie.emojis.map((emoji, idx) => {
@@ -29,7 +29,7 @@ export const GamePage = () => {
         })}
       </div>
 
-      <div id="bottom-bar">
+      <div className="layout--bottom-bar">
         <input 
           autoFocus
           disabled={ctx.isTimeFinished}
