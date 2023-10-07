@@ -30,11 +30,13 @@ export const GamePage = () => {
       </div>
 
       <div className="layout--bottom-bar">
-        <input 
+        <input
           autoFocus
+          className="input-error"
           disabled={ctx.isTimeFinished}
           placeholder="Ingrese en nombre de la película..."
           onChange={ctx.handleInputChange}
+          style={ctx.isError ? { borderColor: "red" } : {}}
           value={ctx.input}
         />
 

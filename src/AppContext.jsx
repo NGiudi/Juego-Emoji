@@ -10,6 +10,7 @@ export const AppContext = React.createContext(null);
 export const AppContextProvider = (props) => {  
   const [displayedMovie, setDisplayedMovie] = React.useState(null);
   const [isGameOver, setIsGameOver] = React.useState(false);
+  const [isError, setError] = React.useState(false);
   const [page, setPage] = React.useState("rules");
   const [points, setPoints] = React.useState(0);
   const [input, setInput] = React.useState("");
@@ -47,6 +48,7 @@ export const AppContextProvider = (props) => {
     displayedMovie,
     isGameOver,
     input,
+    isError,
     isTimeFinished: timer.isFinished,
     page,
     points,
@@ -74,6 +76,9 @@ export const AppContextProvider = (props) => {
     validateInputMovie: () => {
       if (!timer.isFinished && isMovieNameCorrect(input)) {
         handleCorrectMovie();
+        setError(false);
+      } else {
+        setError(true);
       }
       
       setInput(""); //? clear input content.
