@@ -19,9 +19,3 @@ Adivinar la película representada por una serie de emojis en un período de tie
 6. Caso el usuario no adivine la película y finalice los 2 minutos, se reemplaza el botón de enviar por el botón de "Siguiente" para seguir jugando.
 
 7. Al adivinar correctamente la película, el usuario recibirá un punto. El usuario debe apretar en el botón "Siguiente" para ver la siguiente película.
-
-## TODO
-
-- [] add disabled styles in button and input.
-- [] add error styles.
-- [] use typescript.
